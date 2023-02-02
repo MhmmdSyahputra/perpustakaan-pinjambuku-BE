@@ -10,7 +10,7 @@ const JWT_SECRET = 'eriyfbercbieobu3hrurebuberHBububUOBUOUBuo3728u'
 
 //REGISTRASI NEW USER--------------------------------------------------------------------
 router.post("/registrasi", async (req, res) => {
-    const { username, email, password } = req.body
+    const { email, password,username } = req.body
     
     const encrypPassword = await bcryptjs.hash(password, 10)
     
@@ -59,24 +59,7 @@ router.post('/login', async (req, res) => {
 })
 
 
-// MIDDLEWARE-------------------------------------------------------------------------------
-// router.use((req, res, next) => {
-//     // get token from header
-//     const token = JSON.parse(req.headers['x-access-token']);
-//     // console.log(token.token)
-
-//     // verify token
-//     jwt.verify(token.token, JWT_SECRET, (error) => {
-//         if (error) {
-//             return res.status(401).json({ status: 'error', message: 'Token tidak valid' });
-//         } else {
-//             next();
-//         }
-//     });
-// });
-
 // ROUTE YANG HANYA BISA AKSES SAMA ADMIN SAJA ATAU YG SUDAH LOGIN------------------------------
-
 router.post('/GetUser',middlewareValidation, async (req, res) => {
     const { token } = req.body
     // console.log('masuk');
@@ -100,6 +83,22 @@ router.post('/GetUser',middlewareValidation, async (req, res) => {
 
     // res.json({ message: 'Successfully authenticated' });
 })
+
+// ROUTE UNTUK MENCARI TOTAL USER YG ADA ------------------------------
+router.get('/lenUser', async (req, res) => {
+
+    try {
+        const user = await User.find()
+        res.json(user.length)
+    } catch (err) {
+        // console.log(err);
+        res.json({ status: 'error', message: 'User Not Found' });
+    }
+
+    // res.json({ message: 'Successfully authenticated' });
+})
+
+
 
 
 module.exports = router;

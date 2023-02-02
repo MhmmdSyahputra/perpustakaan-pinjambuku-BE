@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const moment = require('moment');
+const currentTime = moment().format('DD-MM-YYYY');
 
 const LibrarySchema = mongoose.Schema({
     judul:{
@@ -15,7 +17,7 @@ const LibrarySchema = mongoose.Schema({
     },
     tanggalTerbit:{
         type: String,
-        required : true
+        default : currentTime
     },
     lembar:{
         type: String,

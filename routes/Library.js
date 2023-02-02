@@ -3,17 +3,14 @@ const router = express();
 const Library = require('../models/Library')
 const middlewareValidation = require('./middleware')
 
-const date = new Date();
-const options = {timeZone: 'Asia/Jakarta', hour12: false};
-const time = date.toLocaleString("id-ID", options);
 
-//CREATE
-router.post("/",middlewareValidation, async (req, res) => {
+//CREATE 
+//ROUTE UNTUK POST BUKU BARU
+router.post("/", async (req, res) => {
     const newAddLibrary = new Library({
         judul: req.body.judul,
         penerbit: req.body.penerbit,
         gambarCover: req.body.gambarCover,
-        tanggalTerbit: req.body.tanggalTerbit,
         lembar: req.body.lembar
     })
 
@@ -25,33 +22,9 @@ router.post("/",middlewareValidation, async (req, res) => {
     }
 });
 
-// POST KOMENTAR
-// router.post("/:id/komentar", async (req, res) => {
-//     try {
-//         // Find the news by its ID
-//         const news = await News.findById(req.params.id);
-//         // Check if the news exists
-//         if (!news) {
-//             return res.status(404).json({ message: "News not found" });
-//         }
-//         // Add the new comment to the news's comments array
-//         news.komentar.push({
-//             nama: req.body.nama,
-//             isiKomentar: req.body.isiKomentar,
-//             tglKomentar: time
-//         });
-//         // Save the news to the database
-//         await news.save();
-//         // Send a success response
-//         res.json({ message: "Comment added successfully" });
-//     } catch (error) {
-//         // Send an error response
-//         res.status(500).json({ message: error.message });
-//     }
-// });
-
 
 //READ
+//ROUTE UNTUK MEMBUKA SEMUA BUKU
 router.get("/", async (req,res)=>{
     try {
         const library = await Library.find()
@@ -61,28 +34,21 @@ router.get("/", async (req,res)=>{
     }
 })
  
-//PostDetail Peminjaman
-router.post("/:libraryId", async (req,res)=>{
+//Detail
+//ROUTE UNTUK MENGAMBIL DETAIL BUKU 
+router.get("/:libraryId", async (req,res)=>{
     try {
         const id = req.params.libraryId
-        const library = await Library.save({_id: id })
+        const library = await Library.find({_id: id })
         res.json(library)
     } catch (error) {
         res.json({message:error})
     }
 })
 
-//SORT CATEGORY
-// router.get("/cate/:newsId", async (req,res)=>{
-//     try {
-//         const news = await News.find({kategori:req.params.newsId})
-//         res.json(news)
-//     } catch (error) {
-//         res.json({message:error})
-//     }
-// })
 
 //UPDATE
+//ROUTE UNTUK MENGUPDATE BUKU 
 router.put("/:libraryId",middlewareValidation, async (req,res)=>{
     try {
         const libraryupdate = await News.updateOne({_id:req.params.libraryId},{
@@ -97,19 +63,9 @@ router.put("/:libraryId",middlewareValidation, async (req,res)=>{
     }
 })
 
-//UPDATE TAYANG
-// router.put("/tayang/:newsId", async (req,res)=>{
-//     try {
-//         const newsupdate = await News.updateOne({_id:req.params.newsId},{
-//             $inc: { tayang: 1 } 
-//         })
-//         res.json(newsupdate)
-//     } catch (error) {
-//         res.json({message:error})
-//     }
-// })
 
 //DELETE
+//ROUTE UNTUK DELETE BUKU 
 router.delete("/:libraryId",middlewareValidation, async (req,res)=>{
     try {
         const libraryDelete = await Library.deleteOne({_id:req.params.libraryId})

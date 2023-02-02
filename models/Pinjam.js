@@ -13,14 +13,42 @@ const PinjamSchema = mongoose.Schema({
         type: String,
         required: true
     }, 
-    Nim:{
-        type : String,
-        required : true
-    },
-    Nama:{
-        type : String,
-        required :  true
-    }
+    total:{
+        type: String,
+        required: true
+    }, 
+    peminjam: [{
+        username: {
+          type: String,
+          required: true
+        },
+        nim: {
+          type: String,
+          required: true
+        }
+    }],
+    buku:[{
+        judul:{
+            type:String,
+            require:true
+        },
+        penerbit:{
+            type:String,
+            require:true
+        },
+        gambarCover:{
+            type:String,
+            require:true
+        },
+        tanggalTerbit:{
+            type:String,
+            require:true
+        },
+        lembar:{
+            type:String,
+            require:true
+        }
+    }]
 })
 
 module.exports = mongoose.model('Pinjam',PinjamSchema)
