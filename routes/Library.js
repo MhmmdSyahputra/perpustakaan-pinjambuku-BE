@@ -6,12 +6,12 @@ const middlewareValidation = require('./middleware')
 
 //CREATE 
 //ROUTE UNTUK POST BUKU BARU
-router.post("/", async (req, res) => {
+router.post("/",middlewareValidation, async (req, res) => {
     const newAddLibrary = new Library({
         judul: req.body.judul,
-        penerbit: req.body.penerbit,
         gambarCover: req.body.gambarCover,
-        lembar: req.body.lembar
+        lembar: req.body.lembar,
+        penerbit: req.body.penerbit
     })
 
     try {
