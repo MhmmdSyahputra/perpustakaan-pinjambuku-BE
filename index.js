@@ -9,23 +9,13 @@ const cors = require("cors");
 const library = require("./routes/Library");
 const pinjam = require("./routes/Pinjam");
 const User = require("./routes/signin_signup");
-// const history = require("./routes/Riwayat");
-
 //middleware
 app.use(bodyParser());
 app.use(cors());
 
-// app.all('/*', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-// });
-
-
 app.use("/system",User)
 app.use("/library", library);
 app.use("/pinjam", pinjam);
-// app.use("/history", history);
 
 //connect to DB
 mongoose.connect(process.env.MYDB);

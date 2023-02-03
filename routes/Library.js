@@ -51,7 +51,7 @@ router.get("/:libraryId", async (req,res)=>{
 //ROUTE UNTUK MENGUPDATE BUKU 
 router.put("/:libraryId",middlewareValidation, async (req,res)=>{
     try {
-        const libraryupdate = await News.updateOne({_id:req.params.libraryId},{
+        const libraryupdate = await Library.updateOne({_id:req.params.libraryId},{
             judul: req.body.judul,
             penerbit: req.body.penerbit,
             tanggalTerbit: req.body.tanggalTerbit,
